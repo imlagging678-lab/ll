@@ -244,14 +244,15 @@ task.spawn(function()
             end
         end
 
-        if bg then
-            local look = HRP.CFrame.LookVector
-            local flatLook = Vector3.new(look.X, 0, look.Z).Unit
-            bg.CFrame = CFrame.lookAt(Vector3.new(), flatLook) 
-                        * CFrame.Angles(math.rad(-currentForwardTilt), 0, math.rad(currentSideTilt))
+if bg then
+            -- Fix: Karakterin anlık bakış yönünü koruyarak eğilme ekliyoruz
+            local currentRotation = HRP.CFrame -- Mevcut tüm dönüşü al
+            local _, y, _ = currentRotation:ToOrientation() -- Sadece Y (sağ-sol) açısını çek
+            
+            bg.CFrame = CFrame.new(HRP.Position) 
+                        * CFrame.Angles(0, y, 0) -- Mevcut bakış yönünü koru
+                        * CFrame.Angles(math.rad(-currentForwardTilt), 0, math.rad(currentSideTilt)) -- Eğilmeyi üzerine bindir
         end
-    end)
-end)
 -- ==========================================
 -- dash mekanizmasi
 -- ==========================================
