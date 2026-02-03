@@ -208,8 +208,6 @@ RunService.RenderStepped:Connect(function()
         -- Eğer bizim animasyonumuz değilse ve Roblox'un default animasyonuysa: DURDUR
         if not isOurs then 
             track:Stop(0) 
-        end
-    end
     -- [HARDLOCK END] --
 
         local isW = UserInputService:IsKeyDown(Enum.KeyCode.W)
