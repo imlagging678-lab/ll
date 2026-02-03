@@ -375,6 +375,8 @@ task.spawn(function()
             return
         end
 
+task.wait(10)
+
         -- what u lookingfor twin🙏
         if humanoid.MoveDirection.Magnitude > 0 then
             -- 1.5 speed boost
