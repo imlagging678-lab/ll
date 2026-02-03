@@ -190,11 +190,27 @@ task.spawn(function()
     local bg = nil
     local activeState = false
 
-    RunService.RenderStepped:Connect(function()
-        if not character or not character.Parent or humanoid.Health <= 0 then
-            if bg then bg:Destroy(); bg = nil end
-            return
+RunService.RenderStepped:Connect(function()
+    if not character or not character.Parent or humanoid.Health <= 0 then
+        if bg then bg:Destroy(); bg = nil end
+        return
+    end
+
+    -- [HARDLOCK ANIM FREEZER] --
+    -- Roblox'un yürüme/koşma animasyonlarını her karede durdurmaya zorla
+    for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+        local isOurs = false
+        for _, our in pairs(dTracks) do 
+            if track.Animation.AnimationId == our.Animation.AnimationId then 
+                isOurs = true 
+            end 
         end
+        -- Eğer bizim animasyonumuz değilse ve Roblox'un default animasyonuysa: DURDUR
+        if not isOurs then 
+            track:Stop(0) 
+        end
+    end
+    -- [HARDLOCK END] --
 
         local isW = UserInputService:IsKeyDown(Enum.KeyCode.W)
         local isS = UserInputService:IsKeyDown(Enum.KeyCode.S)
